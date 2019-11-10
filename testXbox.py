@@ -16,4 +16,13 @@ while not done:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
-            print(event.type)
+            if event.type == pygame.JOYAXISMOTION:
+                if event.axis == 0:
+                    print("gsf")
+
+            # print(event)
+
+
+
+
+#JOYAXISMOTION JOYBALLMOTION JOYBUTTONDOWN JOYBUTTONUP JOYHATMOTION
