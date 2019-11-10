@@ -14,6 +14,8 @@ done = False
 
 deadzone = 0.2
 bus = ""
+oldBus = " "
+busCounter = 0
 
 while not done:
         for event in pygame.event.get():
@@ -22,20 +24,27 @@ while not done:
             if event.type == pygame.JOYAXISMOTION:
                 if event.axis == 0:
                     if event.value >  0 + deadzone:
-                        keyboard.press("d")
-                        sleep(0.5)
+                        bus = "d"
                     if event.value <  0 - deadzone:
-                        keyboard.press("a")
-                        sleep(0.5)
+                        bus = "a"
                 if event.axis == 1:
                     if event.value >  0 + deadzone:
-                        keyboard.press("s")
-                        sleep(0.5)
+                        bus = "s"
                     if event.value <  0 - deadzone:
-                        keyboard.press("w")
-                        sleep(0.5)
+                        bus = "w"
 
+        if bus == oldBus:
+            busCounter += 1
+            if busCounter == 10000:
+                if busCounter % 5000 == 0:
+                    keyboard.press(bus)
 
+        if bus != "" and bus != oldBus:
+            busCounter = 0
+            keyboard.press(bus)
+            oldBus = bus
+
+        print(busCounter)
 
             # print(event)
 
