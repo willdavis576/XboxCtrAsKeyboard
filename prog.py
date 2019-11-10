@@ -27,49 +27,60 @@ deadA = False
 deadB = False
 
 while not done:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                done = True
-            if event.type == pygame.JOYAXISMOTION:
-                if event.axis == 0:
-                    if event.value >  0 + deadzone or event.value < 0 - deadzone:
-                        deadA = False
-                        print("ye", event.value)
-                        if event.value > 0:
-                            bus = "d"
-                        if event.value < 0:
-                            bus = "a"
-                    if event.value < 0 + deadzone and event.value > 0 - deadzone:
+    sleep(0.1)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            done = True
+        if event.type == pygame.JOYAXISMOTION:
+            if event.axis == 0:
+                if event.value >  0 + deadzone or event.value < 0 - deadzone:
+                    deadA = False
+                    print("ye", event.value)
+                    if event.value > 0:
+                        bus = "d"
+                    if event.value < 0:
+                        bus = "a"
+                if event.value < 0 + deadzone and event.value > 0 - deadzone:
+                    print("0 dead")
+                    if bus == "d" and deadA == False:
+                        bus = "a"
+                        deadA = True
+                    if bus == "a" and deadA == False:
+                        bus = "d"
                         deadA = True
 
-                if event.axis == 1:
-                    if event.value >  0 + deadzone or event.value < 0 - deadzone:
-                        deadB = False
-                        print("ye", event.value)
-                        if event.value > 0:
-                            bus = "s"
-                        if event.value < 0:
-                            bus = "w"
-                    if event.value < 0 + deadzone and event.value > 0 - deadzone:
+
+            if event.axis == 1:
+                if event.value >  0 + deadzone or event.value < 0 - deadzone:
+                    deadB = False
+                    print("ye", event.value)
+                    if event.value > 0:
+                        bus = "s"
+                    if event.value < 0:
+                        bus = "w"
+                if event.value < 0 + deadzone and event.value > 0 - deadzone:
+                    print("1 dead")
+                    if bus == "w" and deadB == False:
+                        bus = "s"
+                        deadB = True
+                    if bus == "s" and deadB == False:
+                        bus = "w"
                         deadB = True
 
-                if deadA == True and deadB == True:
-                    print("nah", event.value)
-                    bus = ""
+
+    if bus != "":
+        print(bus, deadA, deadB)
+        keyboard.press(bus)
+
+
+
+    if deadA == True and deadB == True:
+        print("nah", event.value)
+        bus = ""
 
 
 
 
-        print(bus)
-        sleep(0.1)
-        if bus != "":
-            # print(bus)
-            keyboard.press(bus)
-        #
-        #     millis = int(round(time.time() * 1000))
-        #     keyboard.press(bus)
-
-            # print(event)
 
 
 
