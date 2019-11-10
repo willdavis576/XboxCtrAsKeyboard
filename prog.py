@@ -17,34 +17,57 @@ bus = ""
 oldBus = " "
 busCounter = 0
 
+millis = 0
+oldMillis = 0
+
+oldVal = 0
+val = 0
+
+deadA = False
+deadB = False
+
 while not done:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
             if event.type == pygame.JOYAXISMOTION:
                 if event.axis == 0:
-                    if event.value >  0 + deadzone:
-                        bus = "d"
-                    if event.value <  0 - deadzone:
-                        bus = "a"
+                    if event.value >  0 + deadzone or event.value < 0 - deadzone:
+                        deadA = False
+                        print("ye", event.value)
+                        if event.value > 0:
+                            bus = "d"
+                        if event.value < 0:
+                            bus = "a"
+                    if event.value < 0 + deadzone and event.value > 0 - deadzone:
+                        deadA = True
+
                 if event.axis == 1:
-                    if event.value >  0 + deadzone:
-                        bus = "s"
-                    if event.value <  0 - deadzone:
-                        bus = "w"
+                    if event.value >  0 + deadzone or event.value < 0 - deadzone:
+                        deadB = False
+                        print("ye", event.value)
+                        if event.value > 0:
+                            bus = "s"
+                        if event.value < 0:
+                            bus = "w"
+                    if event.value < 0 + deadzone and event.value > 0 - deadzone:
+                        deadB = True
 
-        if bus == oldBus:
-            busCounter += 1
-            if busCounter == 10000:
-                if busCounter % 5000 == 0:
-                    keyboard.press(bus)
+                if deadA == True and deadB == True:
+                    print("nah", event.value)
+                    bus = ""
 
-        if bus != "" and bus != oldBus:
-            busCounter = 0
+
+
+
+        print(bus)
+        sleep(0.1)
+        if bus != "":
+            # print(bus)
             keyboard.press(bus)
-            oldBus = bus
-
-        print(busCounter)
+        #
+        #     millis = int(round(time.time() * 1000))
+        #     keyboard.press(bus)
 
             # print(event)
 
