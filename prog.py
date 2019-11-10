@@ -1,4 +1,5 @@
 import keyboard, pygame
+from time import sleep
 
 pygame.init()
 # screen = pygame.display.set_mode((500, 700))
@@ -12,6 +13,7 @@ joystick.init()
 done = False
 
 deadzone = 0.2
+bus = ""
 
 while not done:
         for event in pygame.event.get():
@@ -20,14 +22,19 @@ while not done:
             if event.type == pygame.JOYAXISMOTION:
                 if event.axis == 0:
                     if event.value >  0 + deadzone:
-                        keyboard.write("d")
+                        keyboard.press("d")
+                        sleep(0.5)
                     if event.value <  0 - deadzone:
-                        keyboard.write("a")
+                        keyboard.press("a")
+                        sleep(0.5)
                 if event.axis == 1:
                     if event.value >  0 + deadzone:
-                        keyboard.write("s")
+                        keyboard.press("s")
+                        sleep(0.5)
                     if event.value <  0 - deadzone:
-                        keyboard.write("w")
+                        keyboard.press("w")
+                        sleep(0.5)
+
 
 
             # print(event)
